@@ -4,11 +4,26 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-         has_many :likes
+  has_many :likes
 
+  def full_name
+    self.first_name + " " + self.last_name
+  end
 
+  def like_check
+    connections_array = []
+    self.likes.each do |like|
+      other_user = User.find(like.swiped_id)
+      if self.id == like.swiped_id
+        next
+      end
+      other_user_likes_array = other_user.likes.select { |x| x.swiped_id == self.id }
+      other_user_likes_array.each do |other|
+        other_id = other.user_id
+      connections_array << User.find(other_id).full_name
+      end
+    end
+    connections_array
+  end
 
-         def full_name
-            self.first_name + " " + self.last_name
-         end
 end

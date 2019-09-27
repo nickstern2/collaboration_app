@@ -1,16 +1,8 @@
 <h1>Welcome <%= current_user.first_name %></h1>
 
 
-<% current_user.likes.each do |like| %>
-<% other_user = User.find(like.swiped_id) %>
-  <% if current_user.id == like.swiped_id %>
-    <% next %>
-  <% end %>
-  <% other_user_likes_array = other_user.likes.select { |x| x.swiped_id == current_user.id } %>
 
-  <%  other_user_likes_array.each do |other|%>
-    <% other_id = other.user_id %>
-    <h2>Connections:</h2>
-    <%= User.find(other_id).full_name %>
-  <% end %>
+<% current_user.like_check.each do |x| %>
+  <%= x %>
 <% end %>
+
