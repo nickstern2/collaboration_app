@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_070728) do
+ActiveRecord::Schema.define(version: 2019_09_26_110652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,10 @@ ActiveRecord::Schema.define(version: 2019_09_26_070728) do
     t.bigint "swiped_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["swiped_id"], name: "index_likes_on_swiped_id"
     t.index ["swiper_id"], name: "index_likes_on_swiper_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -87,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_070728) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "likes", "users"
   add_foreign_key "likes", "users", column: "swiped_id"
   add_foreign_key "likes", "users", column: "swiper_id"
   add_foreign_key "matches", "users", column: "user_one_id"
