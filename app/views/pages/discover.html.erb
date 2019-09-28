@@ -9,6 +9,7 @@
           <%= user.id %>
           <%= user.full_name %>
           <%= link_to "like", new_user_like_path(user) %>
+          <%= link_to "Profile", user_path(user.id) %>
         </div>
       <% end %>
 
