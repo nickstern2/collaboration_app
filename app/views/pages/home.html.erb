@@ -2,7 +2,9 @@
 
 
 <h2>Your Connections:</h2>
-<% current_user.like_check.each do |x| %>
+<% current_user.like_check.uniq.each do |x| %>
+<div class="card">
   <%= x %>
+</div>
 <% end %>
 

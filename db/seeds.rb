@@ -1,8 +1,8 @@
 require 'faker'
 
 puts "destroy everything"
-User.destroy_all
-Profile.destroy_all
+# User.destroy_all
+# Profile.destroy_all
 
 puts "creating 10 users"
 
