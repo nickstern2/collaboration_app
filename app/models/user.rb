@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :likes
+  has_many :likes, dependent: :destroy
+  has_one :profile, dependent: :destroy
 
   def full_name
     self.first_name + " " + self.last_name
@@ -29,11 +30,14 @@ class User < ApplicationRecord
     Profile.where(user_id: self.id)
   end
 
-  # def discover_users
-  #   @discover_users = []
-  #   @users.each do |user|
-  #     @discover_users << user
-  #   end
-  #   @discover_users
-  # end
+   def dislike_user
+    @users = User.all
+    @discover_users = @users
+    @discover_users = @discover_users.to_a
+
+    deleted_user = User.find(params[:id])
+    ele = @discover_users.find_index(deleted_user)
+
+    return @discover_users.delete_at(ele)
+  end
 end

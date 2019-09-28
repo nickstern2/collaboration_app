@@ -4,9 +4,10 @@ Rails.application.routes.draw do
 
   # get "discover", to: 'pages#discover', as: :discover
 
+  get "users/:id/dislike_user", to: "users#dislike_user", as: :dislike_user
+  put "users/:id/dislike_user", to: "users#dislike_user"
 
   resources :users do
-  get "dislike_user", to: "users#dislike_user", as: :dislike_user
   resources :likes, except: [:edit, :update]
     # resources :likes, except: [:edit, :update]
   resources :matches, except: [:edit, :update]
