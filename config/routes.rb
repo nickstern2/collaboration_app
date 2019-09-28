@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   # get "discover", to: 'pages#discover', as: :discover
 
-  get "users/:id/dislike_user", to: "users#dislike_user", as: :dislike_user
-  put "users/:id/dislike_user", to: "users#dislike_user"
 
   resources :users do
   resources :likes, except: [:edit, :update]
