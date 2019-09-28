@@ -3,7 +3,10 @@ class PagesController < ApplicationController
 
   def home
 
-    @users = User.all
+    # @users = User.all
+    if current_user.nil?
+      redirect_to new_user_session_path
+    end
   end
 
 
