@@ -12,6 +12,7 @@ class User < ApplicationRecord
   end
 
   def like_check
+    # checks for all the people you liked
     connections_array = []
     self.likes.each do |like|
       other_user = User.find(like.swiped_id)

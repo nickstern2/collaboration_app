@@ -1,5 +1,4 @@
 class LikesController < ApplicationController
-
   def index
     current_user
     @likes = Like.all
