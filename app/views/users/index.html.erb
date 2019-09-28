@@ -1,0 +1,22 @@
+<h2>Match with new people, <%= current_user.first_name %>!</h2>
+
+
+
+<div class="container">
+    <% @discover_users.each do |user| %>
+    <%# raise %>
+      <% if current_user != user && !current_user.like_check.include?(user.full_name)%>
+        <div class="card">
+          <%= user.id %>
+          <%= user.full_name %>
+          <%= link_to "like", new_user_like_path(user) %>
+          <%= link_to "Profile", user_path(user.id) %>
+          <%#= link_to '[x]', user_dislike_user_path(user.id) %>
+          <%= link_to 'Destroy', users_path(@discover_users.delete_at(@discover_users.find_index(user))), data: { confirm: 'Are you sure?' } %>
+      <% raise %>
+        </div>
+      <% end %>
+    <% end %>
+</div>
+    <%# @discover_users.reject!{|nah| nah == person_to_delete} %>
+    <%#= person_to_delete = @discover_users.user # you need the object that you want removed %>
