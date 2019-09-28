@@ -1,6 +1,11 @@
-<%= simple_form_for @likes do |f| %>
-  <%= f.input :username, label_html: { class: 'my_class' } %>
-  <%= f.input :password, hint: false, error_html: { id: 'password_error'} %>
-  <%= f.input :password_confirmation, label: false %>
+<%= simple_form_for [@user, @like] do |f| %>
+  <%#= f.input :user_id %>
+  <%# f.input :user_id, value: params[:user_id] %>
+  <%= f.hidden_field :user_id, value: @like.user_id = current_user.id %>
+  <%= f.hidden_field :swiped_id, value: @like.swiped_id = @user.id %>
+  <%#= :swiped_id, :field, :value => params[:user_id] %>
+  <%= f.hidden_field :liked, value: @like.liked = true %>
   <%= f.button :submit %>
+
+  <%# raise %>
 <% end %>
