@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
 
-  get "discover", to: 'pages#discover', as: :discover
+  # get "discover", to: 'pages#discover', as: :discover
+
 
   resources :users do
+  get "dislike_user", to: "users#dislike_user", as: :dislike_user
   resources :likes, except: [:edit, :update]
     # resources :likes, except: [:edit, :update]
   resources :matches, except: [:edit, :update]
