@@ -20,7 +20,7 @@ class LikesController < ApplicationController
     @user = User.find(params[:user_id])
     @like = Like.new(like_params)
     if @like.save!
-      redirect_to discover_path
+      redirect_to users_path
     else
       render "new"
       raise
