@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   get "discover", to: 'pages#discover', as: :discover
 
-  resources :likes do
+  resources :users do
+  resources :likes, except: [:edit, :update]
     # resources :likes, except: [:edit, :update]
     resources :matches, except: [:edit, :update]
   end
