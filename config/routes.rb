@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources :users do
   resources :likes, except: [:edit, :update]
     # resources :likes, except: [:edit, :update]
-    resources :matches, except: [:edit, :update]
+  resources :matches, except: [:edit, :update]
+  # resources :profiles, except: [:index]
   end
   resources :messages, except: [:edit, :update]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
