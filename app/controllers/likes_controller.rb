@@ -15,9 +15,12 @@ class LikesController < ApplicationController
   end
 
   def create
-    @current_user = current_user
-    @user = User.find(params[:user_id])
     @like = Like.new(like_params)
+    @user = User.find(params[:user_id])
+    @like.user = current_user
+    @like.swiped_id = @user.id
+
+
     if @like.save!
       redirect_to users_path
     else
@@ -32,6 +35,6 @@ class LikesController < ApplicationController
   private
 
   def like_params
-    params.require(:like).permit(:user_id, :swiped_id, :liked)
+    params.require(:like).permit(:liked)
   end
 end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    @like = Like.new
     @users = User.all
     @discover_users = User.all
     @discover_users = @discover_users.to_a
