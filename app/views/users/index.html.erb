@@ -1,19 +1,60 @@
-<h2>Match with new people, <%= current_user.first_name %>!</h2>
 
+<h2>Meet new collaborators, <%= current_user.first_name %>!</h2>
+
+<!-- 1) If I changed liked? default value: nil, and only showed those people? if you like value => true, or [x] => false -->
+<!-- Can I set a temporary false? changed back to nil after x days?  -->
+<!-- If no, how can I tackle this problem?  -->
+<!-- What is this format getting passed into params when I hit the [x]? currently it doesnt work because its still removing the item from @discover_users array, not @users -->
+<!-- 2) Why when I make user_id == swiper_id, can I not target the entire like instance, but when the attribute is named user_id I can?  -->
+<!-- Does this current way work? If I delete swiper_id and just keep user_id -->
+<!-- 3) Once a like is established, how can I transfer that to a match table? -->
+<!-- 4) Can I male the "Like" form completely hidden? currently getting sent to new.html.erb(likes)? -->
+<!-- 5) With the like logic, do I need validations of user_id & swiped_id for likes model? Since, I am passing that information anyway? Is there a way to hack around it if I dont have validations? -->
+<!-- 6) Are the self. actually unneccesary in user.rb. roboto tells me they are -->
 
 
 <div class="container">
-    <% @discover_users.each do |user| %>
+    <%# @discover_users.each do |user| %>
+    <% @users.each do |user| %>
     <%# raise %>
       <% if current_user != user && !current_user.like_check.include?(user.full_name)%>
         <div class="card">
           <%= user.id %>
           <%= user.full_name %>
-          <%= link_to "like", new_user_like_path(user) %>
+          <%= link_to "like", user_likes_path(user.id), method: :post %>
+
+<%= simple_form_for [user, @like] do |f| %>
+  <%#= f.input :user_id %>
+  <%# f.input :user_id, value: params[:user_id] %>
+  <%#= f.hidden_field :user_id, value: @like.user_id = current_user.id %>
+  <%#= f.hidden_field :swiped_id, value: @like.swiped_id = @user.id %>
+  <%#= :swiped_id, :field, :value => params[:user_id] %>
+  <%= f.hidden_field :liked, value: true %>
+  <%= f.button :submit %>
+
+  <%# raise %>
+<% end %>
+
+
           <%= link_to "Profile", user_path(user.id) %>
           <!--***** seems to delete it from the view but not the actual @discover_user array... ******-->
-          <%= link_to 'Destroy', users_path(@discover_users.delete_at(@discover_users.find_index(user))), data: { confirm: 'Are you sure?' } %>
+          <%= link_to '[x]', users_path(@discover_users.delete_at(@discover_users.find_index(user))), data: { confirm: 'Are you sure?' }%>
+
+
+          <%= simple_form_for [user, @like] do |f| %>
+  <%#= f.input :user_id %>
+  <%# f.input :user_id, value: params[:user_id] %>
+  <%#= f.hidden_field :user_id, value: @like.user_id = current_user.id %>
+  <%#= f.hidden_field :swiped_id, value: @like.swiped_id = @user.id %>
+  <%#= :swiped_id, :field, :value => params[:user_id] %>
+  <%= f.hidden_field :liked, value: false %>
+  <%= f.button :submit %>
+
+  <%# raise %>
+<% end %>
+
           <!-- ********* find a way to have a unique array per user, not impact other users ********-->
+          <!-- Maybe change liked, default: nil and then liked becomes false if you dislike and then only show people that liked == nil?-->
         </div>
       <% end %>
     <% end %>

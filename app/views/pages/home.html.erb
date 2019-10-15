@@ -1,10 +1,20 @@
+<!-- Cuurently home page -->
+
+<% if current_user.first_name.nil? && current_user.last_name.nil? %>
+<%=  render "/users/name_form"%>
+  <% else %>
 <h1>Welcome <%= current_user.first_name %></h1>
-
-
-<h2>Your Connections:</h2>
-<% current_user.like_check.uniq.each do |x| %>
+<%# raise %>
+<% if current_user.like_check.empty? %>
+  <h2> You have no connections, meet new people in discover</h2>
+<% else %>
+  <h2>Your Connections:</h2>
+  <%# raise %>
+  <% current_user.like_check.uniq.each do |person| %>
 <div class="card">
-  <%= x %>
+  <%= person.full_name %>
 </div>
 <% end %>
+<% end %>
 
+<% end %>
