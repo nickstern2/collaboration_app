@@ -22,26 +22,13 @@
   <%= f.hidden_field :liked, value: true %>
   <%= f.button :submit %>
 
-  <% raise %>
+
 <% end %>
 
 
           <%= link_to "Profile", user_path(user.id) %>
           <!--***** seems to delete it from the view but not the actual @discover_user array... ******-->
           <%#= link_to '[x]', users_path(@discover_users.delete_at(@discover_users.find_index(user))), data: { confirm: 'Are you sure?' }%>
-
-
-          <%= simple_form_for [user, @like] do |f| %>
-  <%#= f.input :user_id %>
-  <%# f.input :user_id, value: params[:user_id] %>
-  <%#= f.hidden_field :user_id, value: @like.user_id = current_user.id %>
-  <%#= f.hidden_field :swiped_id, value: @like.swiped_id = @user.id %>
-  <%#= :swiped_id, :field, :value => params[:user_id] %>
-  <%= f.hidden_field :liked, value: false %>
-  <%= f.button :submit, "[x]" %>
-
-
-            <%= link_to "Profile", user_path(user.id) %>
 
             <%= simple_form_for [user, @like] do |f| %>
              <%= f.hidden_field :liked, value: false %>
@@ -51,3 +38,4 @@
       <% end %>
     <% end %>
 </div>
+
