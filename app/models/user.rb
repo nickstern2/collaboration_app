@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  mount_uploader :photo, PhotoUploader
+
   # validates :first_name, presence: true
   # validates :last_name, presence: true
   validates :email, presence: true
@@ -26,7 +28,7 @@ class User < ApplicationRecord
   end
 
   def like_check
-    # checks for all the people you liked??
+    # checks for al?                bhxl the people you liked??
     connections_array = []
     self.likes.each do |like|
       other_user = User.find(like.swiped_id)
