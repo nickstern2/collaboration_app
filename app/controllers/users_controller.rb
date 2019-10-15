@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @user = current_user
+    # @user = current_user
     @like = Like.new
     @users = User.all
     @discover_users = User.all
@@ -11,11 +11,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def update
     @user = User.find(params[:id])
     @user.first_name = params[:user][:first_name]
     @user.last_name = params[:user][:last_name]
-    if @user.save
+    if @user.update(user_params)
       redirect_to root_path
     else
       render "new"
@@ -33,6 +37,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :encrypted_password, :first_name, :last_name)
+    params.require(:user).permit(:email, :encrypted_password, :first_name, :last_name, :photo)
   end
 end
