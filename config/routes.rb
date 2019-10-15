@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :likes, except: [:edit, :update]
     # resources :likes, except: [:edit, :update]
   resources :matches, except: [:edit, :update]
-  resources :profiles, except: [:index]
+  # resources :profiles, except: [:index]
   end
   resources :messages, except: [:edit, :update]
   post 'user/:id/like', to: 'likes#like_user'

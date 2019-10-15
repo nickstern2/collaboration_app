@@ -20,7 +20,7 @@
       <% if current_user != user && !current_user.like_check.include?(user.full_name)%>
         <div class="card">
           <%= user.id %>
-          <%= user.full_name %>
+          <%= user.first_name + " " + user.last_name %>
           <%= link_to "like", user_likes_path(user.id), method: :post %>
 
 <%= simple_form_for [user, @like] do |f| %>
