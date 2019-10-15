@@ -4,9 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
   validates :email, presence: true
+  # after_create :name_check
 
   has_many :likes, dependent: :destroy
   has_one :profile, dependent: :destroy
@@ -15,6 +16,7 @@ class User < ApplicationRecord
 
   # has_one :portfolio, through: :profile
   # has_many :messages, through: :matches
+
 
   def full_name
     self.first_name + " " + self.last_name
