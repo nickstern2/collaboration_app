@@ -1,10 +1,19 @@
-<% if current_user.id = @user.id %>
+<% if current_user.id == @user.id %>
   <h2>Your profile!</h2>
 <% else %>
   <h2><%= @user.full_name %>'s Profile!</h2>
 <% end %>
 
 <div class="container">
+  <%= simple_form_for(current_user) do |f| %>
+  <!-- [...] -->
+  <%= f.input :photo %>
+  <%= f.input :photo_cache, as: :hidden %>
+  <!-- [...] -->
+  <%= f.button :submit %>
+<% end %>
+<%= cl_image_tag @user.photo, height: 300, width: 400, crop: :fill %>
+<%# raise %>
   <p>Email: <%= @user.email %></p>
 
   <% @user.user_profile.each do |attribute| %>
