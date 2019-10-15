@@ -43,6 +43,14 @@ class User < ApplicationRecord
     connections_array.uniq
   end
 
+  # def like_check
+    # check is a user has been liked/disliked by current_user
+
+    # iterate through current_user likes
+
+    # check is user.id is included
+  # end
+
   def user_profile
     Profile.where(user_id: self.id)
   end

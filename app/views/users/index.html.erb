@@ -1,26 +1,13 @@
 
 <h2>Meet new collaborators, <%= current_user.first_name %>!</h2>
 
-<!-- 1) If I changed liked? default value: nil, and only showed those people? if you like value => true, or [x] => false -->
-<!-- Can I set a temporary false? changed back to nil after x days?  -->
-<!-- If no, how can I tackle this problem?  -->
-<!-- What is this format getting passed into params when I hit the [x]? currently it doesnt work because its still removing the item from @discover_users array, not @users -->
-<!-- 2) Why when I make user_id == swiper_id, can I not target the entire like instance, but when the attribute is named user_id I can?  -->
-<!-- Does this current way work? If I delete swiper_id and just keep user_id -->
-<!-- 3) Once a like is established, how can I transfer that to a match table? -->
-<!-- 4) Can I male the "Like" form completely hidden? currently getting sent to new.html.erb(likes)? -->
-<!-- 5) With the like logic, do I need validations of user_id & swiped_id for likes model? Since, I am passing that information anyway? Is there a way to hack around it if I dont have validations? -->
-<!-- 6) Are the self. actually unneccesary in user.rb. roboto tells me they are -->
-
-
 <div class="container">
-    <%# @discover_users.each do |user| %>
     <% @users.each do |user| %>
-    <%# raise %>
-      <% if current_user != user && !current_user.like_check.include?(user.full_name)%>
+      <% if current_user != user && (current_user.likes.where(swiped_id: user.id).empty? == true)%>
         <div class="card">
           <%= user.id %>
           <%= user.first_name + " " + user.last_name %>
+
           <% if !user.photo.nil? %>
             <%= cl_image_tag user.photo, height: 100, width: 100, style:"border-radius: 50%; border: solid 1px;" %>
           <% end %>
@@ -53,11 +40,13 @@
   <%= f.hidden_field :liked, value: false %>
   <%= f.button :submit, "[x]" %>
 
-  <%# raise %>
-<% end %>
 
-          <!-- ********* find a way to have a unique array per user, not impact other users ********-->
-          <!-- Maybe change liked, default: nil and then liked becomes false if you dislike and then only show people that liked == nil?-->
+            <%= link_to "Profile", user_path(user.id) %>
+
+            <%= simple_form_for [user, @like] do |f| %>
+             <%= f.hidden_field :liked, value: false %>
+              <%= f.button :submit, '[x]' %>
+            <% end %>
         </div>
       <% end %>
     <% end %>
