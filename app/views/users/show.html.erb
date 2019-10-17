@@ -5,12 +5,8 @@
 <% end %>
 
 <div class="container">
-  <%= simple_form_for(current_user) do |f| %>
-  <!-- [...] -->
-  <%= f.input :photo %>
-  <%= f.input :photo_cache, as: :hidden %>
-  <!-- [...] -->
-  <%= f.button :submit %>
+<% if policy(User).edit? %>
+  <%= render "photo_form" %>
 <% end %>
 <%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
 <%# raise %>

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   def index
-    # @user = current_user
+    @users = policy_scope(User)
     @like = Like.new
     @users = User.all
     @discover_users = User.all
@@ -8,11 +10,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
@@ -26,14 +26,14 @@ class UsersController < ApplicationController
     end
   end
 
-
   def destroy
   end
 
   private
 
-  def find_users
-    @user = User.all
+  def set_user
+    @user = User.find(params[:id])
+    authorize @user
   end
 
   def user_params
