@@ -14,11 +14,13 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.user == user # Only restaurant creator can update it
+    true
+    # record.user == user # Only restaurant creator can update it
   end
 
   def update?
-    record.user == user  # Only restaurant creator can update it
+    true
+    # record.user == user  # Only restaurant creator can update it
   end
 
   def destroy?

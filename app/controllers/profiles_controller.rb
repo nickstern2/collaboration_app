@@ -4,6 +4,7 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:user_id])
     @profile = Profile.find(params[:id])
     @user.profile = @profile
+    authorize @user
   end
 
 # DONT need because I already create one on User creation??
