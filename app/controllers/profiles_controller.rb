@@ -1,24 +1,21 @@
 class ProfilesController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show
-    @user = User.find(params[:user_id])
-    @profile = Profile.find(params[:id])
     @user.profile = @profile
-    authorize @user
   end
 
-# DONT need because I already create one on User creation??
-  # def new
-  # end
-
-  # def create
-  # end
-# ***********
-
   def edit
+    @user.profile = @profile
   end
 
   def update
+    @user.profile = @profile
+    if @profile.update(profile_params)
+      redirect_to user_profile_path
+    else
+      render 'new'
+    end
   end
 
   def destroy
@@ -26,6 +23,13 @@ class ProfilesController < ApplicationController
 
   private
 
+  def set_user
+    @user = User.find(params[:user_id])
+    @profile = Profile.find(params[:id])
+    authorize @user
+  end
+
   def profile_params
+    params.require(:profile).permit(:bio, :skills, :interests, :photo)
   end
 end

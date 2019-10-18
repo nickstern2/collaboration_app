@@ -1,0 +1,6 @@
+<%= simple_form_for [@user, @profile] do |f| %>
+  <%= f.input :bio %>
+  <%= f.input :skills, collection: ["film making", "writing", "editing", "acting", "drawing", "animations", "marketing", "comedy", "clothing design", "digital design", "journalism"], as: :check_boxes, multiple: true %>
+  <%= f.button :submit, class:"btn btn-primary" %>
+<% end %>
+

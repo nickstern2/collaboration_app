@@ -1,13 +1,8 @@
-<% if current_user.id == @user.id %>
-  <h2>Your profile!</h2>
-<% else %>
-  <h2><%= @user.full_name %>'s Profile!</h2>
-<% end %>
+<h2><%= @user.full_name %>'s Profile!</h2>
 
 <div class="container">
 
 <%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
-<%# raise %>
   <p>Email: <%= @user.email %></p>
 
   <% @user.user_profile.each do |attribute| %>
