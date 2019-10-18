@@ -2,16 +2,19 @@ class LikesController < ApplicationController
   def index
     current_user
     @likes = Like.all
+
   end
 
   def show
     @like = Like.find(params[:id])
+    authorize @user
   end
 
   def new
     @current_user = current_user
     @user = User.find(params[:user_id])
     @like = Like.new
+    authorize @user
   end
 
   def create
@@ -19,6 +22,7 @@ class LikesController < ApplicationController
     @user = User.find(params[:user_id])
     @like.user = current_user
     @like.swiped_id = @user.id
+    authorize @user
 
 
     if @like.save!
