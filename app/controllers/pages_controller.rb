@@ -7,6 +7,9 @@ class PagesController < ApplicationController
 
     # if current_user.first_name.nil? && current_user.last_name.nil?
     #   render "../views/users/name_form"
-    # end
+    # else
+
+    # @users = User.all
+    end
   end
-end
+

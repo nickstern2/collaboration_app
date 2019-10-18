@@ -6,29 +6,23 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  # validates :first_name, presence: true
-  # validates :last_name, presence: true
   validates :email, presence: true
   after_create :profile_create
 
   has_many :likes, dependent: :destroy
   has_one :profile, dependent: :destroy
 
-  # ***Associations to add***
-
-  # has_one :portfolio, through: :profile
-  # has_many :messages, through: :matches
-
   def profile_create
     Profile.create(user_id: self.id)
   end
 
   def full_name
+    if !(self.first_name.nil? || self.last_name.nil?)
     self.first_name + " " + self.last_name
+    end
   end
 
   def like_check
-    # checks for al?                bhxl the people you liked??
     connections_array = []
     self.likes.each do |like|
       other_user = User.find(like.swiped_id)
@@ -42,14 +36,6 @@ class User < ApplicationRecord
     end
     connections_array.uniq
   end
-
-  # def like_check
-    # check is a user has been liked/disliked by current_user
-
-    # iterate through current_user likes
-
-    # check is user.id is included
-  # end
 
   def user_profile
     Profile.where(user_id: self.id)
