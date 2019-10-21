@@ -1,5 +1,5 @@
 <h2>Your Profile</h2>
-<% raise %>
+<%# raise %>
 <div class="container">
 <%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
   <p>Email: <%= @user.email %></p>
@@ -13,5 +13,6 @@
   </div>
 
   <% end %>
-
+<%#= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
+<%= link_to "Delete Account", user_path, method: :delete, data: { confirm: "Are you sure?" } %>
 </div>

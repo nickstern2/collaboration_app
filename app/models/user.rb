@@ -9,8 +9,9 @@ class User < ApplicationRecord
   validates :email, presence: true
   after_create :profile_create
 
-  has_many :likes, :dependent => :delete_all
-  has_one :profile, :dependent => :destroy
+  has_many :likes, dependent: :delete_all
+  # belongs_to :like, as: :swiped_id
+  has_one :profile, dependent: :destroy
 
   def profile_create
     Profile.create(user_id: self.id)
