@@ -4,10 +4,6 @@ class UsersController < ApplicationController
   def index
     @users = policy_scope(User)
     @like = Like.new
-    # @user = User.find(params[:id])
-    # @users = User.all
-    # @discover_users = User.all
-    # @discover_users = @discover_users.to_a
   end
 
   def show
