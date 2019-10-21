@@ -1,5 +1,5 @@
 class Like < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, :dependent => :destroy
 
 # Do I need these with my current logic set-up?
   validates :user_id, presence: true
