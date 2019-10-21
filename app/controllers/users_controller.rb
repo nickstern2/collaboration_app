@@ -24,6 +24,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user.likes.delete_all
+    @other_like = Like.where(swiped_id: @user.id)
+    @other_like.delete_all
+    @user.destroy
+    # raise
   end
 
   private

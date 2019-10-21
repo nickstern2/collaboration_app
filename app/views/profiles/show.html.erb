@@ -8,10 +8,11 @@
   <div>
     <p>Bio:<%= attribute.bio %></p>
     <p>Skills: <%= attribute.skills.join(", ") %></p>
-    <p>Interests: <%= attribute.interests.join (", ") %></p>
+    <!-- <p>Interests: <%#= attribute.interests.join (", ") %></p> -->
     <%= link_to "Edit", edit_user_profile_path %>
   </div>
 
   <% end %>
-
+<%#= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
+<%= link_to "Delete Account", user_path, method: :delete, data: { confirm: "Are you sure?" } %>
 </div>
