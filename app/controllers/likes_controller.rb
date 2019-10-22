@@ -39,7 +39,14 @@ class LikesController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:user_id])
+    @like = Like.find(params[:id])
 
+    if @like.update(like_params)
+      redirect_to root_path
+    else
+      render 'new'
+    end
   end
 
   def destroy
