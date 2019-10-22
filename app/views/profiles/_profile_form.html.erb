@@ -2,52 +2,7 @@
 
 
 <%= simple_form_for [@user, @profile] do |f| %>
-<%#= simple_form_for [@profile, @user] do |f| %>
   <%= f.input :bio %>
   <%= f.input :skills, collection: skills_array, as: :check_boxes, multiple: true %>
   <%= f.button :submit, class:"btn btn-primary" %>
 <% end %>
-
-
-<!-- ul>
-    <li><input type="checkbox" value="product_category_1" data-id="1" />Film Making</li>
-    <li><input type="checkbox" value="product_category_2" data-id="2" />Writing</li>
-    <li><input type="checkbox" value="product_category_3" data-id="3" />Editing</li>
-    <li><input type="checkbox" value="product_category_4" data-id="4" />Acting</li>
-</ul>
-
-<input type="button" id="btn" value="Grab data" /> -->
-<!-- <div id="result"></div> -->
-<%# raise %>
-<!-- <script>
-    window.onload = function(){
-    document.getElementById('btn').addEventListener('click', function(){
-        console.log(grabData());
-        document.getElementById('result').innerText = JSON.stringify(grabData(true));
-    });
-}
-
-function grabData(checked){
-    checked = typeof(checked) == 'undefined' ? false : checked;
-    var items = document.getElementsByTagName('input');
-    let data  = [];
-
-
-    for(var i = 0; i < items.length; i++){
-        if(items[i].type != 'checkbox' || items[i].checked != checked){
-             continue;
-        }
-
-        var item = {
-            // id: items[i].getAttribute('data-id'),
-            // cat_id: items[i].innerHTML,
-            // state: items[i].checked + 0,
-            name: items.text
-        };
-
-        data.push(item);
-    }
-
-    return data;
-}
-</script> -->

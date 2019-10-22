@@ -1,20 +1,42 @@
 <h2>All likes</h2>
 
+  <% like_instances_of_who_liked_me_array = [] %>
 
-<%  Like.where(swiped_id: @user.id).each do |user| %>
-  <div class="card">
-    <%= User.where(id: user.user_id)[0].full_name %>
+  <%  Like.where(swiped_id: @user.id).each do |user| %>
+        <% like_instances_of_who_liked_me_array << user %>
+  <% end %>
 
-     <%#= simple_form_for [user, @like] do |f| %>
+      <!-- ****PROB can delete -- full name of liker**** -->
+    <%#= User.where(id: user.user_id)[0].full_name %>
+
+      <!--***FORM to Like*** -->
+     <%#= simple_form_for [@user, @like] do |f| %>
       <%#= f.hidden_field :liked, value: true %>
       <%#= f.button :submit, "Like" %>
     <%# end %>
 
-     <%= link_to "Profile", user_path(user.id) %>
 
-      <%#= simple_form_for [user, @like] do |f| %>
+        <!--***FORM to [x]**** -->
+      <%#= simple_form_for [@user, @like] do |f| %>
         <%#= f.hidden_field :liked, value: false %>
         <%#= f.button :submit, '[x]' %>
       <%# end %>
+
+<% people_who_liked_me_array = [] %>
+
+<% like_instances_of_who_liked_me_array.each do |u| %>
+  <% people_who_liked_me_array << User.find(u.user_id) %>
+<% end %>
+
+<% people_who_liked_me_array.each do |liked_me| %>
+  <div class="card">
+    <% if !@user.like_check.include?(liked_me) %>
+      <%= liked_me.full_name %>
+      <% if !liked_me.photo.nil? %>
+            <%= cl_image_tag liked_me.photo, height: 100, width: 100, style:"border-radius: 50%; border: solid 1px;" %>
+          <% end %>
+      <%= link_to "Profile", user_path(liked_me.id) %>
+    <% end %>
   </div>
 <% end %>
+
