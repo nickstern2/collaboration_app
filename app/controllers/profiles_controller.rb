@@ -17,6 +17,7 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+    # @user.profile = @profile
   end
 
   def update
@@ -37,8 +38,9 @@ class ProfilesController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
-    # @user = User.find(params[:id])
-    @profile = Profile.where(user_id: 11)
+     # @user = User.find(params[:id])
+     @profile = Profile.find(params[:id])
+    # @profile = Profile.where(user_id: 11)
       if @profile.nil?
         @profile = Profile.find(params[:id])
       end

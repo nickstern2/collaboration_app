@@ -15,7 +15,7 @@
 
             <%= simple_form_for [user, @like] do |f| %>
               <%= f.hidden_field :liked, value: true %>
-              <%= f.button :submit %>
+              <%= f.button :submit, "Like" %>
             <% end %>
 
 
