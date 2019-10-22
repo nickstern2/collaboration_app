@@ -21,6 +21,7 @@
   <div class="card">
     <% if !@user.like_check.include?(liked_me) && liked_me != current_user %>
       <!-- NAME -->
+      <%= liked_me.id %>
       <%= liked_me.full_name %>
       <!-- IMAGE -->
       <% if !liked_me.photo.nil? %>

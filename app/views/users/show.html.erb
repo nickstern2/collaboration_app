@@ -6,13 +6,23 @@
   <p>Email: <%= @user.email %></p>
 
   <% @user.user_profile.each do |attribute| %>
-  <div>
-    <p>Bio:<%= attribute.bio %></p>
-    <p>Skills: <%= attribute.skills.join(", ") %></p>
-    <p>Interests: <%= attribute.interests.join (", ") %></p>
-  </div>
-
+    <div>
+      <p>Bio:<%= attribute.bio %></p>
+      <p>Skills: <%= attribute.skills.join(", ") %></p>
+      <p>Interests: <%= attribute.interests.join (", ") %></p>
+    </div>
   <% end %>
+  <!-- LIKE or [x] from profile view IF they are not already a connection -->
+  <% if !current_user.like_check.include?(@user) %>
+    <%= simple_form_for [@user, @like] do |f| %>
+      <%= f.hidden_field :liked, value: true %>
+      <%= f.button :submit, "Like" %>
+    <% end %>
 
-
+        <!--***FORM to [x]**** -->
+    <%= simple_form_for [@user, @like] do |f| %>
+      <%= f.hidden_field :liked, value: false %>
+      <%= f.button :submit, '[x]' %>
+    <% end %>
+  <% end %>
 </div>

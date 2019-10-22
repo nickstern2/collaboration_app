@@ -1,9 +1,10 @@
-<!--*******HOME***** -->
+<!--*******HOME********* -->
 <p>PAGES#HOME</p>
 <%# raise %>
-  <% if current_user.first_name.nil? && current_user.last_name.nil? %>
-    <%=  render "/users/name_form"%>
-  <% else %>
+<% if current_user.first_name.nil? && current_user.last_name.nil? %>
+  <%=  render "/users/name_form"%>
+<% else %>
+  <div class="container">
     <h1>Welcome <%= current_user.first_name %></h1>
       <% if current_user.like_check.empty? %>
         <p> You have no connections, meet new people in discover</p>
@@ -11,10 +12,12 @@
          <p>Your Connections:</p>
             <% current_user.like_check.uniq.each do |person| %>
               <div class="card">
+                <%= person.id %>
                 <%= person.full_name %>
                 <%= cl_image_tag person.photo, height: 100, width: 100, style:"border-radius: 50%; border: solid 1px;" %>
                 <%= link_to "Profile", user_path(person.id) %>
               </div>
-            <% end %>
+        <% end %>
       <% end %>
-  <% end %>
+    </div>
+<% end %>
