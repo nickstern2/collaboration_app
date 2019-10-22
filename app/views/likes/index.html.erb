@@ -1,0 +1,20 @@
+<h2>All likes</h2>
+
+
+<%  Like.where(swiped_id: @user.id).each do |user| %>
+  <div class="card">
+    <%= User.where(id: user.user_id)[0].full_name %>
+
+     <%#= simple_form_for [user, @like] do |f| %>
+      <%#= f.hidden_field :liked, value: true %>
+      <%#= f.button :submit, "Like" %>
+    <%# end %>
+
+     <%= link_to "Profile", user_path(user.id) %>
+
+      <%#= simple_form_for [user, @like] do |f| %>
+        <%#= f.hidden_field :liked, value: false %>
+        <%#= f.button :submit, '[x]' %>
+      <%# end %>
+  </div>
+<% end %>

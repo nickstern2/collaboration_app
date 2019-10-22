@@ -1,8 +1,9 @@
 class LikesController < ApplicationController
   def index
-    current_user
+    @user = User.find(params[:user_id])
     @likes = Like.all
-
+    @users = policy_scope(User).order(created_at: :desc)
+    @like = Like.new
   end
 
   def show
