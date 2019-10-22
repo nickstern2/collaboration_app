@@ -12,6 +12,8 @@
       <p>Interests: <%= attribute.interests.join (", ") %></p>
     </div>
   <% end %>
+  <!-- LIKE or [x] from profile view IF they are not already a connection -->
+  <% if !current_user.like_check.include?(@user) %>
     <%= simple_form_for [@user, @like] do |f| %>
       <%= f.hidden_field :liked, value: true %>
       <%= f.button :submit, "Like" %>
@@ -22,4 +24,5 @@
       <%= f.hidden_field :liked, value: false %>
       <%= f.button :submit, '[x]' %>
     <% end %>
+  <% end %>
 </div>
