@@ -1,20 +1,47 @@
 <h2>All likes</h2>
 
+  <% like_instances_of_who_liked_me_array = [] %>
 
-<%  Like.where(swiped_id: @user.id).each do |user| %>
+  <%  Like.where(swiped_id: @user.id).each do |user| %>
+        <% like_instances_of_who_liked_me_array << user %>
+  <% end %>
+
+      <!-- ****PROB can delete -- full name of liker**** -->
+    <%#= User.where(id: user.user_id)[0].full_name %>
+
+<% people_who_liked_me_array = [] %>
+
+<% like_instances_of_who_liked_me_array.each do |u| %>
+  <% people_who_liked_me_array << User.find(u.user_id) %>
+<% end %>
+
+<!-- ITERATE through everyone who liked me to check if we are already connected -->
+<!-- If we are NOT -- SHOW them in the Likes tab -->
+<% people_who_liked_me_array.uniq.each do |liked_me| %>
   <div class="card">
-    <%= User.where(id: user.user_id)[0].full_name %>
+    <% if !@user.like_check.include?(liked_me) && liked_me != current_user %>
+      <!-- NAME -->
+      <%= liked_me.full_name %>
+      <!-- IMAGE -->
+      <% if !liked_me.photo.nil? %>
+        <%= cl_image_tag liked_me.photo, height: 100, width: 100, style:"border-radius: 50%; border: solid 1px;" %>
+      <% end %>
+          <!-- PROFILE -->
+      <%= link_to "Profile", user_path(liked_me.id) %>
 
-     <%#= simple_form_for [user, @like] do |f| %>
-      <%#= f.hidden_field :liked, value: true %>
-      <%#= f.button :submit, "Like" %>
-    <%# end %>
+      <!--***FORM to Like*** -->
+      <%= simple_form_for [liked_me, @like] do |f| %>
+        <%= f.hidden_field :liked, value: true %>
+        <%= f.button :submit, "Like" %>
+      <% end %>
 
-     <%= link_to "Profile", user_path(user.id) %>
+        <!--***FORM to [x]**** -->
+      <%= simple_form_for [liked_me, @like] do |f| %>
+        <%= f.hidden_field :liked, value: false %>
+        <%= f.button :submit, '[x]' %>
+      <% end %>
 
-      <%#= simple_form_for [user, @like] do |f| %>
-        <%#= f.hidden_field :liked, value: false %>
-        <%#= f.button :submit, '[x]' %>
-      <%# end %>
+    <% end %>
   </div>
 <% end %>
+

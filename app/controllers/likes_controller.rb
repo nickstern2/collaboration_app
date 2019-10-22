@@ -25,7 +25,6 @@ class LikesController < ApplicationController
     @like.swiped_id = @user.id
     authorize @user
 
-
     if @like.save!
       redirect_to users_path
     else

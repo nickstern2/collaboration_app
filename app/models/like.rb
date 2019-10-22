@@ -8,7 +8,7 @@ class Like < ApplicationRecord
 
   def check_for_match
     unless Like.where(user_id: self.swiped_id, swiped_id: self.user_id, liked: true).empty?
-      # Match.create(user_two_id: self.swiped_id.............. )
+      Match.create(user_two_id: self.swiped_id )
     end
   end
 
