@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = policy_scope(User)
+    @user = current_user
     @like = Like.new
   end
 
@@ -17,7 +18,9 @@ class UsersController < ApplicationController
     @user.first_name = params[:user][:first_name]
     @user.last_name = params[:user][:last_name]
     if @user.update(user_params)
-      redirect_to user_profile_path(@user.id)
+      # raise
+      redirect_to user_profile_path(@user.profile.id)
+      # redirect_to root_path
     else
       render "new"
     end

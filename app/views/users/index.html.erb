@@ -1,6 +1,7 @@
 <!-- *********DISCOVER******** -->
 <h2>Meet new collaborators, <%= current_user.first_name %>!</h2>
 <div class="container">
+  <%# raise %>
     <% @users.each do |user| %>
     <% if !(user.first_name.nil? || user.last_name.nil?) %>
       <% if current_user != user && (current_user.likes.where(swiped_id: user.id).empty? == true)%>

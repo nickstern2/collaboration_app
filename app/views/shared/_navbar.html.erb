@@ -15,7 +15,12 @@
           <%= link_to "Connections", root_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Profile", user_profile_path(:user_id => current_user.id, :id => current_user.profile.id), class: "nav-link" %>
+          <% if !current_user.profile.nil? %>
+          <%# raise %>
+            <%= link_to "Profile", user_profile_path(:user_id => current_user.id, :id => current_user.profile.id), class: "nav-link" %>
+            <% else %>
+            <%= link_to "Create a profile", new_user_profile_path(current_user.id), class: "nav-link" %>
+          <% end %>
         </li>
 
         <li>
