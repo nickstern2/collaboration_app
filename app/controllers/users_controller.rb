@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = policy_scope(User)
+    @users = policy_scope(User).order(created_at: :desc)
     @user = current_user
     @like = Like.new
   end
