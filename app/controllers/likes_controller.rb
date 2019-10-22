@@ -33,6 +33,15 @@ class LikesController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:user_id])
+    @like = Like.find(params[:id])
+  end
+
+  def update
+
+  end
+
   def destroy
   end
 
