@@ -1,5 +1,6 @@
 <%= simple_form_for current_user do |f| %>
   <%= f.input :first_name %>
   <%= f.input :last_name%>
+  <%#= f.hidden_field Profile.create(user_id: current_user.id) %>
   <%= f.button :submit %>
 <% end %>

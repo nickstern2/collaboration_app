@@ -7,7 +7,7 @@ class User < ApplicationRecord
   mount_uploader :photo, PhotoUploader
 
   validates :email, presence: true, uniqueness: true
-  after_create :profile_create
+  # after_create :profile_create
 
   has_many :likes, dependent: :delete_all
   # belongs_to :like, as: :swiped_id
@@ -15,6 +15,7 @@ class User < ApplicationRecord
 
   def profile_create
     Profile.create(user_id: self.id)
+    raise
   end
   def delete_duplicate_profile
     user_profile = Profile.where(user_id: self.id)

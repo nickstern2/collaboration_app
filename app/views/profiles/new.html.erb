@@ -1,11 +1,13 @@
 <p>Create Profile</p>
 <%#= render 'profile_form' %>
-  <% if @user.profile.nil? %>
-    <%= Profile.create(user_id: @user.id) %>
-  <% end %>
+  <%# if @user.profile.nil? %>
+    <%#= Profile.create(user_id: @user.id) %>
+  <%# end %>
+
+<% skills_array = ["film making", "writing", "editing", "acting", "drawing", "animations", "marketing", "comedy", "clothing design", "digital design", "journalism"] %>
+
 
 <%= simple_form_for [@user, @profile] do |f| %>
-<%#= simple_form_for [@profile, @user] do |f| %>
   <%= f.input :bio %>
   <%= f.input :skills, collection: skills_array, as: :check_boxes, multiple: true %>
   <%= f.button :submit, class:"btn btn-primary" %>
