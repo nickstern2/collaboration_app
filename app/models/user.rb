@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  validates :email, presence: true
-  after_create :profile_create
+  validates :email, presence: true, uniqueness: true
+  # after_create :profile_create
 
   has_many :likes, dependent: :delete_all
   # belongs_to :like, as: :swiped_id
@@ -15,6 +15,18 @@ class User < ApplicationRecord
 
   def profile_create
     Profile.create(user_id: self.id)
+    raise
+  end
+  def delete_duplicate_profile
+    user_profile = Profile.where(user_id: self.id)
+      if user_profile.count > 1
+        i = 1
+
+        while i < user_profile.length
+          user_profile[i].delete
+          i += 1
+        end
+      end
   end
 
   def full_name
@@ -38,9 +50,9 @@ class User < ApplicationRecord
     connections_array.uniq
   end
 
-  def user_profile
-    Profile.where(user_id: self.id)
-  end
+  # def user_profile
+  #   Profile.where(user_id: self.id)
+  # end
 
   def dislike_user
     @users = User.all

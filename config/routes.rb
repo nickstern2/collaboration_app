@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :users do
-  resources :likes, except: [:edit, :update]
+  resources :likes
     # resources :likes, except: [:edit, :update]
   resources :matches, except: [:edit, :update]
   resources :profiles, except: [:index]
