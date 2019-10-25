@@ -20,6 +20,7 @@
     <div class="card">
       <p>Skills:</p>
         <% if !@user.profile.skills.empty? %>
+        <!-- ***DON'T KNOW WHY FIRST ELE IS ""*** -->
           <%= @user.profile.skills[1..-1].join(", ").capitalize%>
         <% end %>
     </div>
