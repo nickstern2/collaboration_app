@@ -3,23 +3,27 @@
   <% like_instances_of_who_liked_me_array = [] %>
 
   <%  Like.where(swiped_id: @user.id).each do |user| %>
+      <% if user.liked != false %>
         <% like_instances_of_who_liked_me_array << user %>
+      <% end %>
   <% end %>
-
-      <!-- ****PROB can delete -- full name of liker**** -->
-    <%#= User.where(id: user.user_id)[0].full_name %>
 
 <% people_who_liked_me_array = [] %>
 
 <% like_instances_of_who_liked_me_array.each do |u| %>
-  <% people_who_liked_me_array << User.find(u.user_id) %>
+  <% if u.liked != false %>
+    <% people_who_liked_me_array << User.find(u.user_id) %>
+  <% end %>
 <% end %>
 
 <!-- ITERATE through everyone who liked me to check if we are already connected -->
 <!-- If we are NOT -- SHOW them in the Likes tab -->
 <% people_who_liked_me_array.uniq.each do |liked_me| %>
   <div class="card">
-    <% if !@user.like_check.include?(liked_me) && liked_me != current_user %>
+    <%# raise %>
+    <% if !@user.like_check.include?(liked_me) &&
+      liked_me != current_user && !(@user.likes.where(swiped_id: liked_me.id, liked: false).exists?) %>
+      <!-- && @user.likes.where(swiped_id: liked_me.id, liked: true) -->
       <!-- NAME -->
       <%= liked_me.id %>
       <%= liked_me.full_name %>
@@ -30,18 +34,32 @@
           <!-- PROFILE -->
       <%= link_to "Profile", user_path(liked_me.id) %>
 
-      <!--***FORM to Like*** -->
-      <%= simple_form_for [liked_me, @like] do |f| %>
-        <%= f.hidden_field :liked, value: true %>
-        <%= f.button :submit, "Like" %>
-      <% end %>
+      <!-- IF THE LIKE DOESN'T EXIST, CREATE IT -->
+      <% if @user.likes.where(swiped_id: liked_me.id).empty? %>
 
-        <!--***FORM to [x]**** -->
-      <%= simple_form_for [liked_me, @like] do |f| %>
-        <%= f.hidden_field :liked, value: false %>
-        <%= f.button :submit, '[x]' %>
-      <% end %>
+        <%= simple_form_for [liked_me, @like] do |f| %>
+          <%= f.hidden_field :liked, value: true %>
+          <%= f.button :submit, "Like" %>
+        <% end %>
 
+        <%= simple_form_for [liked_me, @like] do |f| %>
+          <%= f.hidden_field :liked, value: false %>
+          <%= f.button :submit, '[x]' %>
+        <% end %>
+
+      <% else %>
+        <!-- IF THE LIKE ALREADY EXISTS, UPDATE IT -->
+          <%= simple_form_for [@user, current_user.likes.where(swiped_id: liked_me.id)[0]] do |f| %>
+            <%= f.hidden_field :liked, value: true %>
+            <%= f.button :submit, '(like#update)' %>
+          <% end %>
+
+          <%= simple_form_for [liked_me, current_user.likes.where(swiped_id: liked_me.id)[0]] do |f| %>
+          <%= f.hidden_field :liked, value: false %>
+          <%= f.button :submit, '[x]' %>
+        <% end %>
+
+      <% end %>
     <% end %>
   </div>
 <% end %>

@@ -4,6 +4,7 @@ class LikesController < ApplicationController
     @likes = Like.all
     @users = policy_scope(User).order(created_at: :desc)
     @like = Like.new
+    @update_like = current_user.likes.where(swiped_id: @user.id)[0]
   end
 
   def show
@@ -34,13 +35,18 @@ class LikesController < ApplicationController
   end
 
   def edit
+    raise
     @user = User.find(params[:user_id])
     @like = Like.find(params[:id])
   end
 
   def update
+
     @user = User.find(params[:user_id])
     @like = Like.find(params[:id])
+    @like.liked = params[:like][:liked]
+    # raise
+    authorize @user
 
     if @like.update(like_params)
       redirect_to root_path

@@ -13,10 +13,31 @@ class User < ApplicationRecord
   # belongs_to :like, as: :swiped_id
   has_one :profile, dependent: :destroy
 
-  # def profile_create
-  #   Profile.create(user_id: self.id)
-  #   raise
-  # end
+  def full_name
+    if !(self.first_name.nil? || self.last_name.nil?)
+    self.first_name + " " + self.last_name
+    end
+  end
+
+  def like_check
+    connections_array = []
+    # Iterate through all my likes
+    self.likes.each do |like|
+      # find the id of the person I liked
+      other_user = User.find(like.swiped_id)
+      # SKIP if that other person is myself or if the like instance is not true
+      next if self.id == like.swiped_id || like.liked != true
+      # Select all the other person's likes where they liked me (should be just one?*if any*)
+      other_user_likes_array = other_user.likes.select { |x| x.swiped_id == self.id && x.liked == true}
+      # Iterate through this new array (again, should be a single instance??)
+      other_user_likes_array.each do |other|
+        other_id = other.user_id
+        connections_array << User.find(other_id)
+      # raise
+      end
+    end
+    connections_array.uniq
+  end
 
   def delete_duplicate_profile
     user_profile = Profile.where(user_id: self.id)
@@ -29,35 +50,4 @@ class User < ApplicationRecord
         end
       end
   end
-
-  def full_name
-    if !(self.first_name.nil? || self.last_name.nil?)
-    self.first_name + " " + self.last_name
-    end
-  end
-
-  def like_check
-    connections_array = []
-    self.likes.each do |like|
-      other_user = User.find(like.swiped_id)
-      next if self.id == like.swiped_id
-
-      other_user_likes_array = other_user.likes.select { |x| x.swiped_id == self.id }
-      other_user_likes_array.each do |other|
-        other_id = other.user_id
-        connections_array << User.find(other_id)
-      end
-    end
-    connections_array.uniq
-  end
-  # def dislike_user
-  #   @users = User.all
-  #   @discover_users = @users
-  #   @discover_users = @discover_users.to_a
-
-  #   deleted_user = User.find(params[:id])
-  #   ele = @discover_users.find_index(deleted_user)
-
-  #   return @discover_users.delete_at(ele)
-  # end
 end

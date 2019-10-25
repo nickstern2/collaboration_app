@@ -9,7 +9,8 @@
   </div>
   <%#= @userdelete_duplicate_profile %>
   <%# @user.user_profile.each do |attribute| %>
-  <% @user.delete_duplicate_profile %>
+  <% @user.delete_duplicate_profile if Profile.where(user_id: @user.id).count > 1 %>
+
   <%# @user.profiledo |attribute| %>
 
   <div>

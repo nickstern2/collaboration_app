@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   def show
     @like = Like.new
+    @update_like = current_user.likes.where(swiped_id: @user.id)[0]
   end
 
   def edit

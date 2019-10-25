@@ -5,13 +5,14 @@
 <%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
   <p>Email: <%= @user.email %></p>
     <div>
+      <%# raise %>
       <div class="card">
       <p>Bio:</p>
         <%= @user.profile.bio %>
       </div>
       <div class="card">
       <p>Skills:</p>
-        <%= @user.profile.skills[1..-1].join(", ")%>
+        <%= @user.profile.skills[1..-1].join(", ") if !@user.profile.skills.empty? %>
       </div>
     </div>
   <!-- LIKE or [x] from profile view IF they are not already a connection -->
@@ -26,5 +27,16 @@
       <%= f.hidden_field :liked, value: false %>
       <%= f.button :submit, '[x]' %>
     <% end %>
+  <% else %>
+      <%#= link_to "unmatch", edit_user_like_path(@user.id)%>
+      <!-- method: :patch -->
+      <%# if @updated_like %>
+
+      <%= simple_form_for [@user, @update_like] do |f| %>
+      <%= f.hidden_field :liked, value: false %>
+      <%= f.button :submit, 'unmatch' %>
+    <%# raise %>
+    <% end %>
   <% end %>
 </div>
+
