@@ -13,10 +13,11 @@ class User < ApplicationRecord
   # belongs_to :like, as: :swiped_id
   has_one :profile, dependent: :destroy
 
-  def profile_create
-    Profile.create(user_id: self.id)
-    raise
-  end
+  # def profile_create
+  #   Profile.create(user_id: self.id)
+  #   raise
+  # end
+
   def delete_duplicate_profile
     user_profile = Profile.where(user_id: self.id)
       if user_profile.count > 1
@@ -49,19 +50,14 @@ class User < ApplicationRecord
     end
     connections_array.uniq
   end
+  # def dislike_user
+  #   @users = User.all
+  #   @discover_users = @users
+  #   @discover_users = @discover_users.to_a
 
-  # def user_profile
-  #   Profile.where(user_id: self.id)
+  #   deleted_user = User.find(params[:id])
+  #   ele = @discover_users.find_index(deleted_user)
+
+  #   return @discover_users.delete_at(ele)
   # end
-
-  def dislike_user
-    @users = User.all
-    @discover_users = @users
-    @discover_users = @discover_users.to_a
-
-    deleted_user = User.find(params[:id])
-    ele = @discover_users.find_index(deleted_user)
-
-    return @discover_users.delete_at(ele)
-  end
 end

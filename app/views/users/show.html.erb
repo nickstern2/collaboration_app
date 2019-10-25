@@ -4,14 +4,16 @@
 
 <%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
   <p>Email: <%= @user.email %></p>
-
-  <%# @user.user_profile.each do |attribute| %>
     <div>
-      <p>Bio:<%= @user.profile.bio %></p>
-      <p>Skills: <%= @user.profile.skills.join(", ") %></p>
-      <p>Interests: <%= @user.profile.interests.join (", ") %></p>
+      <div class="card">
+      <p>Bio:</p>
+        <%= @user.profile.bio %>
+      </div>
+      <div class="card">
+      <p>Skills:</p>
+        <%= @user.profile.skills[1..-1].join(", ")%>
+      </div>
     </div>
-  <%# end %>
   <!-- LIKE or [x] from profile view IF they are not already a connection -->
   <% if !current_user.like_check.include?(@user) %>
     <%= simple_form_for [@user, @like] do |f| %>
