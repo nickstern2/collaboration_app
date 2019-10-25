@@ -19,10 +19,11 @@ class UsersController < ApplicationController
     @profile = @user.profile
     @user.first_name = params[:user][:first_name]
     @user.last_name = params[:user][:last_name]
-    if @user.update(user_params)
+    if @user.update(user_params) && @user.profile.nil?
       # raise
-      # redirect_to user_profile_path(@user.id, @profile.id)
       redirect_to root_path
+    elsif @user.update(user_params) && !@user.profile.nil?
+      redirect_to user_profile_path(@user.id, @profile.id)
     else
       render "new"
     end
