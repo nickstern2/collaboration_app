@@ -2,6 +2,7 @@
 <p>PAGES#HOME</p>
 <%# raise %>
 <p>Add to notes: render edit portfolio or name in partial</p>
+<p>Configure error pages</p>
 <% if current_user.first_name.nil? && current_user.last_name.nil? %>
   <%=  render "/users/name_form"%>
 <% else %>
