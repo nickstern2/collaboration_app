@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_18_185917) do
+ActiveRecord::Schema.define(version: 2019_10_25_222734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,13 @@ ActiveRecord::Schema.define(version: 2019_10_18_185917) do
     t.bigint "matches_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "like_id"
+    t.bigint "receiver_id"
+    t.bigint "user_id"
+    t.index ["like_id"], name: "index_messages_on_like_id"
     t.index ["matches_id"], name: "index_messages_on_matches_id"
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "portfolios", force: :cascade do |t|
@@ -95,7 +101,10 @@ ActiveRecord::Schema.define(version: 2019_10_18_185917) do
   add_foreign_key "likes", "users", column: "swiper_id"
   add_foreign_key "matches", "users", column: "user_one_id"
   add_foreign_key "matches", "users", column: "user_two_id"
+  add_foreign_key "messages", "likes"
   add_foreign_key "messages", "matches", column: "matches_id"
+  add_foreign_key "messages", "users"
+  add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "portfolios", "profiles"
   add_foreign_key "profiles", "users"
   add_foreign_key "users", "locations"

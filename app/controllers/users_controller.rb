@@ -37,15 +37,12 @@ class UsersController < ApplicationController
     current_user.destroy
     authorize current_user
       redirect_to root_path
-    # redirect_to :back
-    # raise
   end
 
   private
 
   def set_user
     @user = User.find(params[:id])
-    # @user = current_user
     authorize @user
   end
 

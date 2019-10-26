@@ -1,0 +1,58 @@
+<h2>Conversation</h2>
+
+<% @received = Message.where(user_id: current_user.id, receiver_id: @user.id)%>
+<% @sent = Message.where(user_id: @user.id, receiver_id: current_user.id) %>
+
+<% @all_messages = [] %>
+  <% if @received.exists? %>
+    <% @received.each do |r| %>
+      <% @all_messages << r %>
+    <% end %>
+  <% end %>
+<% if @sent.exists? %>
+    <% @sent.each do |s| %>
+      <% @all_messages << s %>
+    <% end %>
+  <% end %>
+
+
+<% @all_messages.reverse.each do |message| %>
+  <% @other_person = User.find(message.user_id) %>
+  <%#raise %>
+
+  <% if message.user_id == current_user.id %>
+  <%# raise %>
+    <div class="card">
+      <p>You: </p><%= message.sent %>
+    </div>
+  <% else %>
+    <div class="card">
+      <%= @other_person.full_name  %><p>: </p>
+      <%# raise %>
+      <%= message.sent %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= simple_form_for [@user, @message] do |f| %>
+  <%#= f.input :receiver_id, collection: users_message_array.each { |x| x } %>
+  <%# raise %>
+  <%#=  %>
+  <%= f.input :sent, as: :text %>
+  <%= f.button :submit %>
+<% end %>
+<%# raise %>
+
+<%# end %>
+<%# @messages.each do |message| %>
+<!-- <div class="card"> -->
+  <%# raise %>
+  <%# if !message.sent.nil? %>
+    <!-- <p>you:<%#= message.sent %></p> -->
+  <%# elsif !message.received.nil? %>
+    <%#= User.find(message.receiver_id).full_name  %>
+    <%#= message.received %>
+  <%# end %>
+
+<!-- </div> -->
+<%# end %>

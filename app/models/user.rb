@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :likes, dependent: :delete_all
   # belongs_to :like, as: :swiped_id
+  has_many :messages, dependent: :delete_all
   has_one :profile, dependent: :destroy
 
   def full_name

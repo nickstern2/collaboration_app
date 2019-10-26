@@ -1,0 +1,21 @@
+<h2>All Messages</h2>
+
+  <%# messages_with_specific_user = @user.messages.map { |message| message.receiver_id}%>
+    <%# if messages_with_specific_user.count > 1 %>
+    <% messages_with_specific_user =  @user.messages.map {|x| x.receiver_id }.uniq %>
+
+    <% messages_with_specific_user.each do |message| %>
+    <%# @user.messages.each do |message| %>
+      <% person = User.find(message) %>
+      <%# raise %>
+    <div class="card">
+      <%= person.id %>
+        <%= person.full_name %>
+        <%= cl_image_tag person.photo, height: 100, width: 100, style:"border-radius: 50%; border: solid 1px;" %>
+      <%= link_to "Profile", user_path(person.id) %>
+        <%= link_to "messages", user_message_path(person.id, Message.where(receiver_id: message).first.id) %>
+
+    </div>
+  <% end %>
+    <%= link_to "New Message", new_user_message_path(@user.id) %>
+
