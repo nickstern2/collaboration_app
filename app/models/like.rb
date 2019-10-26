@@ -1,4 +1,5 @@
 class Like < ApplicationRecord
+  has_many :messages
   belongs_to :user, dependent: :destroy
   validates :swiped_id, :uniqueness => { :scope => :user_id}
 

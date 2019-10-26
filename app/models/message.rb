@@ -1,3 +1,4 @@
 class Message < ApplicationRecord
-  belongs_to :matches
+  # belongs_to :like
+  belongs_to :user
 end

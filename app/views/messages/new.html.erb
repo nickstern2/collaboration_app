@@ -1,0 +1,12 @@
+<% users_message_array = [] %>
+<% @users.each do |x| %>
+<% users_message_array << [x.full_name, x.id] %>
+<% end %>
+
+
+<%= simple_form_for [@user, @message] do |f| %>
+  <%= f.input :receiver_id, collection: users_message_array.each { |x| x } %>
+  <%# raise %>
+  <%= f.input :sent, as: :text %>
+  <%= f.button :submit %>
+<% end %>
