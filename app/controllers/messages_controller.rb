@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   end
 
   def show
-    # @user = User.find(params[:user_id])
+    @user = User.find(params[:user_id])
     # @messages = Message.where(user_id: @user.id)
     @messages = Message.where(user_id: @user.id) + Message.where(receiver_id: @user.id)
     @message = Message.new
@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
 
   def create
     @users = User.all
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:receiver_id])
     # @like = Like.find(params[:like_id])
     @message = Message.new
     @message.user_id = current_user.id
@@ -34,10 +34,13 @@ class MessagesController < ApplicationController
     authorize @user
 
     if @message.save(message_params)
-      redirect_to user_message_path(@user.id, @message.id)
+    # raise
+      respond_to do |format|
+        format.html { redirect_to root_url }
+        format.json { render json: @message }
+      end
     else
       render "new"
-      raise
     end
   end
 

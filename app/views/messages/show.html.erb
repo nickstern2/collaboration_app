@@ -1,10 +1,5 @@
 <h2>Conversation</h2>
-<!-- put all messages in an array -->
-<!-- Order by created_at -->
-<!-- Iterate through them and put them one by one to represent messages -->
 
-<%# @received = Message.where(user_id: current_user.id, receiver_id: @user.id)%>
-<%# @sent = Message.where(user_id: @user.id, receiver_id: current_user.id) %>
 <% @all_messages = [] %>
   <% if @received.exists? %>
     <% @received.each do |r| %>
@@ -18,46 +13,49 @@
   <% end %>
 
 
-<%# raise %>
+
+<!-- DIV ends after form -->
+<div class="chat">
 <%# @all_messages.each do |message| %>
-<% @messages.sort.each do |message| %>
-  <% @other_person = User.find(message.user_id) %>
-  <%# raise %>
+  <ul id="message-list">
+    <% @messages.sort.each do |message| %>
+      <% @other_person = User.find(message.user_id) %>
 
-  <% if message.user_id == current_user.id %>
-  <%# raise %>
-    <div class="card">
-      <p>You: </p><%= message.sent %>
-    </div>
-  <% else %>
-    <div class="card">
-      <%= @other_person.full_name  %><p>: </p>
-      <%# raise %>
-      <%= message.sent %>
-    </div>
-  <% end %>
-<% end %>
-
-<%= simple_form_for [@user, @message] do |f| %>
-  <%#= f.input :receiver_id, collection: users_message_array.each { |x| x } %>
-  <%# raise %>
-  <%#=  %>
-
-  <%= f.input :sent, as: :text %>
-  <%= f.button :submit %>
-<% end %>
+        <% if message.user_id == current_user.id %>
+          <!-- <div class="card"> -->
+            <li>
+              <p>You: <%= message.sent %> </p>
+            </li>
+          <!-- </div> -->
+        <% else %>
+          <!-- <div class="card"> -->
+            <li>
+              <%= @other_person.full_name %>: <%= message.sent %>
+            </li>
+          <!-- </div> -->
+        <% end %>
+    <% end %>
+  </ul>
 <%# raise %>
 
-<%# end %>
-<%# @messages.each do |message| %>
-<!-- <div class="card"> -->
-  <%# raise %>
-  <%# if !message.sent.nil? %>
-    <!-- <p>you:<%#= message.sent %></p> -->
-  <%# elsif !message.received.nil? %>
-    <%#= User.find(message.receiver_id).full_name  %>
-    <%#= message.received %>
-  <%# end %>
+<!-- NEW FORM with AJAX -->
+<form action="/users/<%=@current_user.id%>/messages" method="post">
 
-<!-- </div> -->
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+  <input type="hidden" name="receiver_id" value="<%= params[:user_id] %>" />
+  <input type="hidden" name="user_id" value="<%= @current_user.id %>" />
+
+  <label for="">Sent
+    <input type="text" name="message[sent]" id="" value="" />
+  </label>
+
+  <input type="submit" name="" id="" value="Add Message" />
+ </form>
+</div>
+
+<!-- Old Form  -->
+<%#= simple_form_for [@user, @message] do |f| %>
+  <%#= f.input :sent, as: :text %>
+  <%#= f.button :submit %>
 <%# end %>
+<%# raise %>
