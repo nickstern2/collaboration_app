@@ -1,8 +1,10 @@
 <h2>Conversation</h2>
+<!-- put all messages in an array -->
+<!-- Order by created_at -->
+<!-- Iterate through them and put them one by one to represent messages -->
 
-<% @received = Message.where(user_id: current_user.id, receiver_id: @user.id)%>
-<% @sent = Message.where(user_id: @user.id, receiver_id: current_user.id) %>
-
+<%# @received = Message.where(user_id: current_user.id, receiver_id: @user.id)%>
+<%# @sent = Message.where(user_id: @user.id, receiver_id: current_user.id) %>
 <% @all_messages = [] %>
   <% if @received.exists? %>
     <% @received.each do |r| %>
@@ -16,9 +18,11 @@
   <% end %>
 
 
-<% @all_messages.reverse.each do |message| %>
+<%# raise %>
+<%# @all_messages.each do |message| %>
+<% @messages.sort.each do |message| %>
   <% @other_person = User.find(message.user_id) %>
-  <%#raise %>
+  <%# raise %>
 
   <% if message.user_id == current_user.id %>
   <%# raise %>
@@ -38,6 +42,7 @@
   <%#= f.input :receiver_id, collection: users_message_array.each { |x| x } %>
   <%# raise %>
   <%#=  %>
+
   <%= f.input :sent, as: :text %>
   <%= f.button :submit %>
 <% end %>

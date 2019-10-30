@@ -1,14 +1,16 @@
 class MessagesController < ApplicationController
+  before_action :all_messages, only: [:index, :show]
   def index
     @users = policy_scope(User).order(created_at: :desc)
-    @user = User.find(params[:user_id])
+    # @user = User.find(params[:user_id])
     @message = Message.all
     # @user = User.f
   end
 
   def show
-    @user = User.find(params[:user_id])
-    @messages = Message.where(user_id: @user.id)
+    # @user = User.find(params[:user_id])
+    # @messages = Message.where(user_id: @user.id)
+    @messages = Message.where(user_id: @user.id) + Message.where(receiver_id: @user.id)
     @message = Message.new
     authorize @user
   end
@@ -27,11 +29,12 @@ class MessagesController < ApplicationController
     @message = Message.new
     @message.user_id = current_user.id
     @message.sent = params[:message][:sent].strip
-    @message.receiver_id = params[:message][:user_id]
+    @message.receiver_id = params[:message][:receiver_id]
+    @message.receiver_id = @user.id
     authorize @user
 
     if @message.save(message_params)
-      redirect_to root_path
+      redirect_to user_message_path(@user.id, @message.id)
     else
       render "new"
       raise
@@ -45,5 +48,11 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:sent, :received, :user_id, :receiver_id)
+  end
+
+  def all_messages
+    @user = User.find(params[:user_id])
+    @sent = Message.where(user_id: @user.id)
+    @received = Message.where(receiver_id: @user.id)
   end
 end
