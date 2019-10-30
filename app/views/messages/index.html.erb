@@ -17,7 +17,6 @@
   <% @messages_with_specific_user.uniq.each do |message| %>
     <div class="container">
         <div class="card">
-      <%# raise %>
           <% if !message.nil? %>
             <% person = User.find(message) %>
               <%= person.id %>
@@ -33,7 +32,6 @@
                   <% else %>
                     <%= link_to "messages", user_message_path(person.id, @sent.first.id) %>
                   <% end %>
-                  <%# raise %>
           <% end %>
         </div>
     </div>
