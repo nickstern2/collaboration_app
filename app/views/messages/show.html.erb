@@ -22,17 +22,17 @@
       <% @other_person = User.find(message.user_id) %>
 
         <% if message.user_id == current_user.id %>
-          <!-- <div class="card"> -->
-            <li>
-              <p>You: <%= message.sent %> </p>
+          <div class="card">
+            <li style="list-style-type: none";>
+              <%= cl_image_tag @current_user.photo, height: 30, width: 30, style:"border-radius: 50%; border: solid 1px;"%> <%= message.sent %>
             </li>
-          <!-- </div> -->
+          </div>
         <% else %>
-          <!-- <div class="card"> -->
-            <li>
-              <%= @other_person.full_name %>: <%= message.sent %>
+          <div class="card">
+            <li style="list-style-type: none";>
+              <%= cl_image_tag @other_person.photo, height: 30, width: 30, style:"border-radius: 50%; border: solid 1px;"%> <%= message.sent %>
             </li>
-          <!-- </div> -->
+          </div>
         <% end %>
     <% end %>
   </ul>

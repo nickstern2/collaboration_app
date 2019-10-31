@@ -4,7 +4,6 @@ class MessagesController < ApplicationController
     @users = policy_scope(User).order(created_at: :desc)
     # @user = User.find(params[:user_id])
     @message = Message.all
-    # @user = User.f
   end
 
   def show
@@ -38,6 +37,7 @@ class MessagesController < ApplicationController
       respond_to do |format|
         format.html { redirect_to root_url }
         format.json { render json: @message }
+        # ***Make it auto for incomming messages too****
       end
     else
       render "new"
