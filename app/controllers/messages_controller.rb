@@ -22,9 +22,13 @@ class MessagesController < ApplicationController
   end
 
   def create
+    # raise
     @users = User.all
-    @user = User.find(params[:receiver_id])
-    # @user = User.find(params[:message][:receiver_id])
+    if !params[:receiver_id].nil?
+      @user = User.find(params[:receiver_id])
+    else
+      @user = User.find(params[:message][:receiver_id])
+    end
     # @like = Like.find(params[:like_id])
     @message = Message.new
     @message.user_id = current_user.id
