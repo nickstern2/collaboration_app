@@ -1,4 +1,4 @@
-<h2>Conversation</h2>
+<h2>Conversation with <%= @user.full_name %></h2>
 
 <% @all_messages = [] %>
   <% if @received.exists? %>
@@ -27,7 +27,7 @@
             <li style="list-style-type: none";>
               <%= cl_image_tag @current_user.photo, height: 30, width: 30, style:"border-radius: 50%; border: solid 1px;"%> <%= message.sent %>
                <div style="float:right;">
-                <%= message.created_at.strftime("%I:%M%p") %><%= message.created_at.strftime("on %m/%d/%Y") %>
+                <%= message.created_at.strftime("%I:%M%p") %> <%= message.created_at.strftime("%m/%d/%Y") %>
               </div>
             </li>
           </div>
@@ -38,7 +38,7 @@
             <li style="list-style-type: none";>
              <strong><%= cl_image_tag @other_person.photo, height: 30, width: 30, style:"border-radius: 50%; border: solid 1px;"%> <%= message.sent %>
               <div style="float:right;">
-                <%= message.created_at.strftime("%I:%M%p") %><%= message.created_at.strftime("on %m/%d/%Y") %></strong>
+                <%= message.created_at.strftime("%I:%M%p") %> <%= message.created_at.strftime("%m/%d/%Y") %></strong>
               </div>
             </li>
           </div>
@@ -54,7 +54,7 @@
   <input type="hidden" name="receiver_id" value="<%= params[:user_id] %>" />
   <input type="hidden" name="user_id" value="<%= @current_user.id %>" />
 
-  <label for="">Sent
+  <label for="">
     <input type="text" name="message[sent]" id="" value="" />
   </label>
 
