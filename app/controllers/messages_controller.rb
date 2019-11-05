@@ -39,7 +39,7 @@ class MessagesController < ApplicationController
 
     if @message.save(message_params)
       respond_to do |format|
-        format.html { redirect_to root_url }
+        format.html { redirect_to user_messages_path }
         format.json { render json: @message }
         # ***Make it auto for incomming messages too****
       end
