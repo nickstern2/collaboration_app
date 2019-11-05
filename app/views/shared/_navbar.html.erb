@@ -30,9 +30,8 @@
                 <i class="fas fa-user-circle"></i>
             <% end %>
           <% else %>
-            <%= link_to "Create a profile", new_user_profile_path(current_user.id), class: "nav-link" do %>
-                <i class="fas fa-user-circle"></i>
-            <% end %>
+            <%= link_to "Create a profile", new_user_profile_path(current_user.id), class: "nav-link" %>
+                <!-- <i class="fas fa-user-circle"></i> -->
           <% end %>
         </li>
         <li class="nav-item">

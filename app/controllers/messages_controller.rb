@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:user_id])
+    # @user = User.find(params[:user_id])
     # @messages = Message.where(user_id: @user.id)
     @messages = Message.where(user_id: @user.id) + Message.where(receiver_id: @user.id)
     @message = Message.new
@@ -22,14 +22,14 @@ class MessagesController < ApplicationController
   end
 
   def create
-    # raise
     @users = User.all
-    # if !params[:receiver_id].nil?
+    if !params[:receiver_id].nil?
+      # FOR CREATE NEW MESSAGE
       @user = User.find(params[:receiver_id])
-    # else
-      # @user = User.find(params[:message][:receiver_id])
-    # end
-    # @like = Like.find(params[:like_id])
+    else
+      # FOR AJAX
+      @user = User.find(params[:message][:receiver_id])
+    end
     @message = Message.new
     @message.user_id = current_user.id
     @message.sent = params[:message][:sent].strip
@@ -60,7 +60,7 @@ class MessagesController < ApplicationController
 
   def all_messages
     @user = User.find(params[:user_id])
-    @sent = Message.where(user_id: @user.id)
-    @received = Message.where(receiver_id: @user.id)
+    @sent = Message.where(user_id: current_user.id)
+    @received = Message.where(receiver_id: current_user.id)
   end
 end
