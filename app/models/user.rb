@@ -10,7 +10,7 @@ class User < ApplicationRecord
   # after_create :profile_create
 
   has_many :likes, dependent: :delete_all
-  # belongs_to :like, as: :swiped_id
+  has_many :reviews, dependent: :destroy
   has_many :messages, dependent: :delete_all
   has_one :profile, dependent: :destroy
 
