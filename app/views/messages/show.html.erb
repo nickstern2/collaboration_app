@@ -1,25 +1,29 @@
-<h2>Conversation with <%= @user.full_name %></h2>
+<h2>Conversation with <%= @user.full_name %> <%= @user.id%></h2>
 
-<% @all_messages = [] %>
+<% @all_messages_with_user = [] %>
   <% if @received.exists? %>
     <% @received.each do |r| %>
-      <% @all_messages << r %>
+      <% if r.receiver_id == current_user.id && r.user_id == @user.id %>
+      <% @all_messages_with_user << r %>
     <% end %>
   <% end %>
+  <% end %>
+
 <% if @sent.exists? %>
     <% @sent.each do |s| %>
-      <% @all_messages << s %>
+      <% if s.receiver_id == @user.id && s.user_id == current_user.id %>
+      <%# raise %>
+        <% @all_messages_with_user << s %>
+      <% end  %>
     <% end %>
   <% end %>
-
-
 
 <!-- DIV ends after form -->
 <div class="chat">
-<%# @all_messages.each do |message| %>
+<%# @all_messages_with_user.each do |message| %>
   <ul id="message-list">
-    <% @messages.sort.each do |message| %>
-      <% @other_person = User.find(message.user_id) %>
+    <% @all_messages_with_user.sort.each do |message| %>
+      <% other_person = User.find(@user.id) %>
 
         <% if message.user_id == current_user.id %>
         <!-- YOU -->
@@ -36,7 +40,7 @@
         <!-- OTHER PERSON -->
           <div class="card">
             <li style="list-style-type: none";>
-             <strong><%= cl_image_tag @other_person.photo, height: 30, width: 30, style:"border-radius: 50%; border: solid 1px;"%> <%= message.sent %>
+             <strong><%= cl_image_tag other_person.photo, height: 30, width: 30, style:"border-radius: 50%; border: solid 1px;"%> <%= message.sent %>
               <div style="float:right;">
                 <%= message.created_at.strftime("%I:%M%p") %> <%= message.created_at.strftime("%m/%d/%Y") %></strong>
               </div>
