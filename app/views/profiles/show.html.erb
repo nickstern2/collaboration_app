@@ -2,10 +2,18 @@
 <%= @user.full_name %>
 
 <div class="container">
-<%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
+  <div class="avatar">
+      <%= cl_image_tag @user.photo, height: 200, width: 200, style:"border-radius: 50%; border: solid 1px;"  %>
+  </div>
   <p>Email: <%= @user.email %></p>
   <div class="card mb-5">
-    <%= render "./users/photo_form" %>
+
+    <!-- *****Add image if one doesn't exists***** -->
+    <%# if !@user.photo? %>
+      <%= render "./users/photo_form" %>
+    <%# else %>
+      <%#= render "./users/update_photo_form" %>
+    <%# end %>
   </div>
 
   <% @user.delete_duplicate_profile if Profile.where(user_id: @user.id).count > 1 %>
