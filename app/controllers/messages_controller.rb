@@ -38,7 +38,6 @@ class MessagesController < ApplicationController
     authorize @user
 
     if @message.save(message_params)
-    # raise
       respond_to do |format|
         format.html { redirect_to root_url }
         format.json { render json: @message }

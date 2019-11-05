@@ -1,0 +1,7 @@
+<%= simple_form_for(@user) do |f| %>
+  <%= f.hidden_field :first_name %>
+  <%= f.hidden_field :last_name %>
+  <%= f.input :photo, placeholder: "Select new image" %>
+  <%= f.input :photo_cache, as: :hidden %>
+  <%= f.button :submit, "Add/edit image", class:"btn btn-primary" %>
+<% end %>
