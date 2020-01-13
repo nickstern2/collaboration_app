@@ -15,6 +15,7 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:user_id])
     @profile = Profile.new
     @user.profile = @profile
+
     authorize @user
     # Profile.create(user_id: @user.id)
     @user.profile.skills = params[:profile][:skills]
@@ -57,6 +58,6 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:bio, :skills, :interests, :photo)
+    params.require(:profile).permit(:bio, :skills, :interests, :photo, :reviews)
   end
 end
