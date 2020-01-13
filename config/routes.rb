@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :users do
   resources :likes
+  resources :reviews
     # resources :likes, except: [:edit, :update]
   resources :matches, except: [:edit, :update]
   resources :profiles, except: [:index]
